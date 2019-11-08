@@ -1,32 +1,23 @@
 package Automobili;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
+import Controler.HibernateDAO;
 import Model.Car;
 
 public class GlavnaHibernateKlasa {
 
 	public static void main(String[] args) {
 
-		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		HibernateDAO dao=new HibernateDAO();
+
+		// Car car = new Car("Maserati","Ghilbi",2016,0.18,true);
+		// dao.SnimiAutoUBazu(car);
 		
-		Car car=new Car("Bugatti","Vayron",2015,1.8,true);
+		// Car car = dao.VratiAuto(2);
+		// System.out.println(car.getMarka()+" "+car.getModel());
 		
-		Session sesija=factory.openSession();
-			sesija.beginTransaction();
-			
-			try {
-			
-				sesija.save(car);
-				System.out.println("Podaci su uspešno ubačeni u bazu");
-				sesija.getTransaction().commit();
-				
-			} catch (Exception e) {
-				sesija.getTransaction().rollback();
-			}
-			
-		sesija.close();
+		// Car car =dao.VratiAuto(2);
+		// dao.updateCarPrice(car.getIdCar(), 1800000);
+	
+		CAR car = dao.deleteCar(2);
 	}
 }

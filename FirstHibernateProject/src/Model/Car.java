@@ -20,6 +20,7 @@ public class Car {
 	public Car() {
 		
 	}
+	
 	public Car(String marka, String model, int godiste, double cena, boolean registracija) {
 	
 		this.marka=marka;
@@ -66,7 +67,5 @@ public class Car {
 	public void setRegistracija(boolean registracija) {
 		this.registracija = registracija;
 	}
-	
-	
-	
+
 }
