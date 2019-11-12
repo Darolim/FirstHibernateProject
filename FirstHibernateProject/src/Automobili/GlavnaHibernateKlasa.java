@@ -2,6 +2,9 @@ package Automobili;
 
 import Controler.HibernateDAO;
 import Model.Car;
+import Model.User;
+import Model.VisitCard;
+import Model.VrstaVozila;
 
 public class GlavnaHibernateKlasa {
 
@@ -9,19 +12,23 @@ public class GlavnaHibernateKlasa {
 
 		HibernateDAO dao=new HibernateDAO();
 
-		// Car car = new Car("Maserati","Ghilbi",2016,0.18,true);
-		// dao.SnimiAutoUBazu(car);
+		Car car=new Car("Land rover", "Discovery", 2018, 39990, false,VrstaVozila.SUV);
 		
-		// Car car = dao.VratiAuto(2);
-		// System.out.println(car.getMarka()+" "+car.getModel());
+		VisitCard visitCard=new VisitCard();
 		
-		// Car car =dao.VratiAuto(2);
-		// dao.updateCarPrice(car.getIdCar(), 1800000);
-	
-		if(dao.deleteCar(2)) {
-			System.out.println("Obrisan je auto");
-		}else {
-			System.out.println("Nije obrisan auto");
-		}
+		visitCard.setIme("ruzica");
+		visitCard.setEmail("ruza@gmail.com");
+		visitCard.setBrojTelefona("0641234567");
+		
+		User user =new User();
+		
+		user.setUserName("Ruža");
+		user.setPassword("ruzaprogramer123");
+		user.setNovcanik(100000);
+		user.setVisitCard(visitCard);
+		
+		dao.SnimiAutoUBazu(car);
+		dao.SnimiUseraUBazu(user);
+		
 	}
 }

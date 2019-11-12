@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import Model.Car;
+import Model.User;
 
 public class HibernateDAO {
 
@@ -87,20 +88,39 @@ public class HibernateDAO {
 		
 		Car car=null;
 		
-	try {
-	
-		car = sesija.get(Car.class, id);
-		sesija.delete(car);
-		return true;
-		
-	} catch (Exception e) {
-		
-		sesija.getTransaction().rollback();
-		return false;
-		
-	}	finally {
-		
-		sesija.close();
+		try {		
+			car = sesija.get(Car.class, id);
+				sesija.delete(car);
+			sesija.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			sesija.getTransaction().rollback();
+			return false;
+		}finally {
+			sesija.close();	
+		}
 	}
+
+public boolean SnimiUseraUBazu (User user) {
+		
+		Session sesija = factory.openSession();
+			sesija.beginTransaction();
+			
+		try {
+		
+			sesija.save(user);
+			sesija.getTransaction().commit();
+			return true;
+			
+		} catch (Exception e) {
+			
+			sesija.getTransaction().rollback();
+			return false;
+			
+		}	finally {
+			
+			sesija.close();
+		}
 	}
+
 }
