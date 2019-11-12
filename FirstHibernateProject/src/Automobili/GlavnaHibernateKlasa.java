@@ -18,6 +18,10 @@ public class GlavnaHibernateKlasa {
 		// Car car =dao.VratiAuto(2);
 		// dao.updateCarPrice(car.getIdCar(), 1800000);
 	
-		CAR car = dao.deleteCar(2);
+		if(dao.deleteCar(2)) {
+			System.out.println("Obrisan je auto");
+		}else {
+			System.out.println("Nije obrisan auto");
+		}
 	}
 }
