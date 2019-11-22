@@ -1,5 +1,8 @@
 package Automobili;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Controler.HibernateDAO;
 import Model.Car;
 import Model.User;
@@ -12,25 +15,38 @@ public class GlavnaHibernateKlasa {
 
 		HibernateDAO dao=new HibernateDAO();
 
-		/*Car car=new Car("Land rover", "Discovery", 2018, 39990, false,VrstaVozila.SUV);
+		User user=dao.VratiUsera(1);
+		System.out.println(user.getUserName());
 		
-		VisitCard visitCard=new VisitCard();
+		dao.izlistajAutomobile(user);
 		
-		visitCard.setIme("ruzica");
-		visitCard.setEmail("ruza@gmail.com");
-		visitCard.setBrojTelefona("0641234567");
+		/*Car auto1 = dao.VratiAuto(2);
+		Car auto2 = dao.VratiAuto(3);
+		Car auto3 = dao.VratiAuto(5);
 		
-		User user =new User();
+		List<Car> ruziniAutomobili = new ArrayList<Car>();
 		
-		user.setUserName("Ruža");
-		user.setPassword("ruzaprogramer123");
-		user.setNovcanik(100000);
-		user.setVisitCard(visitCard);
-				
-		dao.SnimiUseraUBazu(user);
-		dao.SnimiAutoUBazu(car);*/
+		ruziniAutomobili.add(auto1);
+		ruziniAutomobili.add(auto2);
+		ruziniAutomobili.add(auto3);
 		
-		dao.linkujUseraiAuto(1, 1);
+		if(dao.daLiUserImaDovoljnoParaZaAutomobile(user, ruziniAutomobili)) {
+			
+			dao.spojiUseraIcar(user, ruziniAutomobili);
+			
+		}
+		
+		
+		
+		Car car1=new Car("Chrysler", "300c", 2010, 35000, false,VrstaVozila.PUTNIČKO);
+		Car car2=new Car("Dodge", "Caliber", 2017, 10000, false,VrstaVozila.PUTNIČKO);
+		Car car3=new Car("Lexus", "lc500", 20109, 110000, false,VrstaVozila.PUTNIČKO);
+		Car car4=new Car("Lada", "Niva", 2019, 19000, false,VrstaVozila.TERENAC);
+		
+		dao.SnimiAutoUBazu(car1);
+		dao.SnimiAutoUBazu(car2);
+		dao.SnimiAutoUBazu(car3);
+		dao.SnimiAutoUBazu(car4);*/
 		
 		
 	}

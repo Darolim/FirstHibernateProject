@@ -1,5 +1,9 @@
 package Controler;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -57,6 +61,30 @@ public class HibernateDAO {
 	}
 	}
 
+	public User VratiUsera (int id) {
+		
+		Session sesija = factory.openSession();
+		sesija.beginTransaction();
+		
+		User user=null;
+		
+	try {
+	
+		user = sesija.get(User.class, id);
+		sesija.getTransaction().commit();
+		return user;
+		
+	} catch (Exception e) {
+		
+		sesija.getTransaction().rollback();
+		return user;
+		
+	}	finally {
+		
+		sesija.close();
+	}
+	}
+	
 	public void updateCarPrice (int id, double novaCena) {
 		
 		Session sesija = factory.openSession();
@@ -123,7 +151,108 @@ public class HibernateDAO {
 		}
 	}
 
-	public void linkujUseraiAuto (int idCar, int idUser) {
+	public boolean daLiUserImaDovoljnoParaZaAutomobile (User user, List<Car>listaAutomobila) {
+		
+		Session sesija=factory.openSession();
+		sesija.beginTransaction();
+		
+		double novcanik=user.getNovcanik();
+		
+		double krajnjaCena=0;
+		
+		for (Car car : listaAutomobila) {
+			
+			krajnjaCena+=car.getCena();
+		}
+		
+		try {
+		
+			if(novcanik>=krajnjaCena) {
+				
+				System.out.println("Uspešna kupovina automobila");
+				sesija.getTransaction().commit();
+				return true;
+			}else {
+				System.out.println("Nemate dovoljno novca");
+				sesija.getTransaction().commit();
+				return false;
+			}
+			
+		} catch (Exception e) {
+			
+			sesija.getTransaction().rollback();
+			return false;
+			 
+		} finally {
+			
+			sesija.close();
+			
+		}
+		}
+	
+	public void spojiUseraIcar(User user, List<Car>listaAutomobila) {
+		
+		Session sesija=factory.openSession();
+		sesija.beginTransaction();
+		
+		user.setAutomobili(listaAutomobila);
+		
+		double krajnjaCena=0;
+		for (Car car : listaAutomobila) {
+			krajnjaCena += car.getCena();
+		}
+		
+		user.setNovcanik(user.getNovcanik()-krajnjaCena);
+		
+		try {
+				sesija.update(user);
+				sesija.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			sesija.getTransaction().rollback();
+			 
+		} finally {
+			
+			sesija.close();
+			
+		}
+		
+		
+	}
+	
+	public void izlistajAutomobile (User user) {
+		
+		
+		Session sesija=factory.openSession();
+		sesija.beginTransaction();
+		
+		List<Car> automobili = new ArrayList<Car>();
+				
+		try {
+		
+			automobili = user.getAutomobili();
+			
+			System.out.println("Korisnik "+user.getUserName()+ " je kupio: ");
+			
+			for (Car car : automobili) {
+				System.out.println(car.getMarka()+" "+car.getModel());
+			}
+			
+			sesija.getTransaction().commit();
+			
+		} catch (Exception e) {
+			
+			sesija.getTransaction().rollback();
+			 
+		} finally {
+			
+			sesija.close();
+			
+		}
+		
+	}
+/*	public void linkujUseraiAuto (int idCar, int idUser) {
 		
 		Session sesija=factory.openSession();
 		sesija.beginTransaction();
@@ -145,5 +274,5 @@ public class HibernateDAO {
 			sesija.close();
 		}
 		
-	}
+	}*/
 }
