@@ -8,7 +8,6 @@ public class VisitCard {
 	private String Ime;
 	private String brojTelefona;
 	private String Email;
-	
 	public String getIme() {
 		return Ime;
 	}
@@ -27,5 +26,7 @@ public class VisitCard {
 	public void setEmail(String email) {
 		Email = email;
 	}
+	
+
 		
 }

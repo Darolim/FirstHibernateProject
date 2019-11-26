@@ -205,6 +205,13 @@ public class HibernateDAO {
 		user.setNovcanik(user.getNovcanik()-krajnjaCena);
 		
 		try {
+				
+			for (Car car : listaAutomobila) {
+				car.setKorisnik(user);
+				sesija.update(car);
+				krajnjaCena += car.getCena();
+			}
+			
 				sesija.update(user);
 				sesija.getTransaction().commit();
 			
@@ -231,6 +238,14 @@ public class HibernateDAO {
 				
 		try {
 		
+			User u=sesija.get(User.class,user.getIdUser());
+			
+			// u.getAutomobili().size();
+			
+			// Hibernate.initialize(u);
+			
+			// automobili = u.getAutomobili();
+			
 			automobili = user.getAutomobili();
 			
 			System.out.println("Korisnik "+user.getUserName()+ " je kupio: ");
