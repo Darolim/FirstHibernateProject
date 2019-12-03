@@ -3,6 +3,8 @@ package Controler;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -260,6 +262,69 @@ public class HibernateDAO {
 			
 			sesija.getTransaction().rollback();
 			 
+		} finally {
+			
+			sesija.close();
+			
+		}
+		
+	}
+	
+	public List<Car> dajMiSveAutomobileIzBaze () {
+		
+		Session sesija=factory.openSession();
+		sesija.beginTransaction();
+		
+		List<Car> automobili = new ArrayList<Car>();
+		
+		try {
+			
+			String upit = "FROM Car";
+			Query query = sesija.createQuery(upit);
+			automobili=query.getResultList();
+					
+			sesija.getTransaction().commit();
+			
+			return automobili;
+			
+		} catch (Exception e) {
+			
+			sesija.getTransaction().rollback();
+			
+			return null;
+			
+		} finally {
+			
+			sesija.close();
+			
+		}
+		
+	}
+	
+	public List<Car> dajMiSveJeftinijeAutomobile (double odabranaCena) {
+		
+		Session sesija=factory.openSession();
+		sesija.beginTransaction();
+		
+		List<Car> automobili = new ArrayList<Car>();
+		
+		try {
+			
+			String upit = "FROM Car WHERE cena < :Snupi";
+			Query query = sesija.createQuery(upit);
+				query.setParameter("Snupi", odabranaCena);
+			automobili=query.getResultList();
+					
+			sesija.getTransaction().commit();
+			
+			return automobili;
+			
+		} catch (Exception e) {
+			
+			sesija.getTransaction().rollback();
+			
+			return null;
+			
 		} finally {
 			
 			sesija.close();

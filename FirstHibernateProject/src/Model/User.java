@@ -23,8 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="korisnik")
 // @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-// @Inheritance(strategy=InheritanceType.JOINED)
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy=InheritanceType.JOINED)
 // @DiscriminatorColumn(name="Vrsta_usera", discriminatorType=DiscriminatorType.STRING)					 
 
 public class User {
